@@ -4,6 +4,8 @@ import ReactDOMServer from "react-dom/server";
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { StaticRouter as Router } from "react-router-dom";
+import { Helmet } from "react-helmet";
+
 import matchRoute from "./matchRoute";
 
 import App from "~/App";
@@ -34,12 +36,13 @@ export default async (req, res, next) => {
       </CookiesProvider>
     </Provider>
   );
+  const helmet = Helmet.renderStatic();
 
   if (context.url) {
     return res.redirect(context.url);
   }
 
-  const html = tmpl({ markup, preloadedState });
+  const html = tmpl({ markup, preloadedState, helmet });
 
   res.send(html);
 };

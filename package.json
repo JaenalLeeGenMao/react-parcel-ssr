@@ -11,13 +11,14 @@
     "morgan": "^1.9.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "react": "^16.12.0",
     "react-cookie": "^2.2.0",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
     "react-meta-tags": "^0.7.4",
     "react-redux": "^5.0.7",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "universal-cookie-express": "^2.2.0"
@@ -50,7 +51,7 @@
     "ssr": "concurrently 'yarn ssr:client' 'yarn ssr:server'",
     "build:client": "BABEL_ENV=client parcel build src/index.html --no-cache --public-url /static -d build/static --no-source-maps",
     "build:server": "BABEL_ENV=client parcel build server/app.js --no-cache -d build -t node --no-source-maps",
-    "build": "yarn clearbuild && concurrently 'yarn build:client' 'yarn build:server'",
+    "build": "yarn clear && concurrently 'yarn build:client' 'yarn build:server'",
     "serve": "NODE_ENV=production node build/app.js"
   }
 }

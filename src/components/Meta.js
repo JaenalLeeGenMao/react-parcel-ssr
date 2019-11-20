@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import MetaTags from "react-meta-tags";
+import { Helmet } from "react-helmet";
 
 class Header extends Component {
   render() {
@@ -24,7 +24,7 @@ class Header extends Component {
         ? `Mola TV - ${title}`
         : "Mola TV - Broadcaster Resmi Liga Inggris 2019-2022";
     return (
-      <MetaTags>
+      <Helmet>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ class Header extends Component {
 
         <meta name="referrer" content="origin" />
         <meta name="referrer" content="origin-when-cross-origin" />
-      </MetaTags>
+      </Helmet>
     );
   }
 }
