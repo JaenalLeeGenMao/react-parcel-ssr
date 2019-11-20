@@ -13,6 +13,8 @@ import routes from "~/routes";
 import configureStore from "~/store/configureStore";
 import tmpl from "./tmpl";
 
+import Html from "../../src/components/Html";
+
 export default async (req, res, next) => {
   const { component, params } = matchRoute(req.path);
   if (!component) {
@@ -42,7 +44,11 @@ export default async (req, res, next) => {
     return res.redirect(context.url);
   }
 
-  const html = tmpl({ markup, preloadedState, helmet });
+  const assets = tmpl({ markup, preloadedState, helmet });
 
-  res.send(html);
+  const html = ReactDOMServer.renderToStaticMarkup(
+    <Html markup={markup} preloadedState={preloadedState} helmet={helmet} />
+  );
+
+  res.send(html.replace("</body>", `${assets}</body>`));
 };

@@ -14,6 +14,8 @@ export default ({ markup, preloadedState, helmet }) => {
       html = fs.readFileSync(path.resolve(__dirname, "../../.tmp/index.html"));
     }
   }
+
   compiled = _template(html);
-  return compiled({ markup, preloadedState, helmet });
+
+  return compiled({});
 };
