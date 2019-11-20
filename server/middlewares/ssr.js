@@ -1,29 +1,29 @@
 // src/server/middlewares/ssr.js
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { Provider } from 'react-redux'
-import { CookiesProvider } from 'react-cookie'
-import { StaticRouter as Router } from 'react-router-dom'
-import matchRoute from './matchRoute'
- 
-import App from '~/App'
-import routes from '~/routes'
-import configureStore from '~/store/configureStore'
-import tmpl from './tmpl'
- 
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { Provider } from "react-redux";
+import { CookiesProvider } from "react-cookie";
+import { StaticRouter as Router } from "react-router-dom";
+import matchRoute from "./matchRoute";
+
+import App from "~/App";
+import routes from "~/routes";
+import configureStore from "~/store/configureStore";
+import tmpl from "./tmpl";
+
 export default async (req, res, next) => {
-  const { component, params } = matchRoute(req.path)
+  const { component, params } = matchRoute(req.path);
   if (!component) {
-    return next()
+    return next();
   }
 
-  const context = {}
+  const context = {};
 
-  const store = configureStore()
+  const store = configureStore();
   if (component.fetchData) {
-    await component.fetchData(store.dispatch, params, req.query)
+    await component.fetchData(store.dispatch, params, req.query);
   }
-  const preloadedState = store.getState()
+  const preloadedState = store.getState();
 
   const markup = ReactDOMServer.renderToString(
     <Provider store={store}>
@@ -33,13 +33,13 @@ export default async (req, res, next) => {
         </Router>
       </CookiesProvider>
     </Provider>
-  )
+  );
 
   if (context.url) {
-    return res.redirect(context.url)
+    return res.redirect(context.url);
   }
 
-  const html = tmpl({ markup, preloadedState })
- 
-  res.send(html)
-}
+  const html = tmpl({ markup, preloadedState });
+
+  res.send(html);
+};
