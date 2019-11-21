@@ -13,7 +13,7 @@ export default function Html({ markup, preloadedState, helmet }) {
         {helmet.link.toComponent()}
       </head>
       <body {...bodyAttrs}>
-        <div id="main-app" dangerouslySetInnerHTML={{ __html: markup }} />
+        <div id="main-app" dangerouslySetInnerHTML={{ __html: markup }}></div>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__PRELOADED_STATE__=${serialize(preloadedState)}`

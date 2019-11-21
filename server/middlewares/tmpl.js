@@ -17,5 +17,5 @@ export default ({ markup, preloadedState, helmet }) => {
 
   compiled = _template(html);
 
-  return compiled({});
+  return compiled({ markup, preloadedState, helmet });
 };
