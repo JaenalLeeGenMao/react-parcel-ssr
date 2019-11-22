@@ -21,15 +21,8 @@ const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 let store = null;
 
 export default (preloadedState = {}) => {
-  // console.log('configureStore', store)
   if (!store) {
     store = createStore(reducers, preloadedState, enhancers);
   }
-  // if (module.hot) {
-  //   module.hot.accept('./reducers/index', () => {
-  //     const nextReducers = require('./reducers/index')
-  //     store.replaceReducer(nextReducers)
-  //   })
-  // }
   return store;
 };
