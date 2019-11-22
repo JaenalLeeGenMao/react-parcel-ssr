@@ -1,4 +1,4 @@
-import * as types from "~/store/types";
+import types from "~/store/types";
 
 const initialState = {
   data: {}

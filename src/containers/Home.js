@@ -7,7 +7,7 @@ import { withCookies, Cookies } from "react-cookie";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 
-import { getHomeData } from "~/store/actions";
+import { getHomeData } from "~/store/actions/home";
 
 import Meta from "~/components/Meta";
 import Header from "~/components/Header";

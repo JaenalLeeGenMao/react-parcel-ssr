@@ -1,40 +1,38 @@
 // src/components/About.js
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import _isEmpty from 'lodash/isEmpty'
-import _fetch from '~/utils/_fetch'
-import { getData } from '~/store/actions'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import _isEmpty from "lodash/isEmpty";
+import _fetch from "~/utils/_fetch";
+import { getData } from "~/store/actions/about";
 
-import Header from '~/components/Header'
+import Header from "~/components/Header";
 
-import styles from './About.css'
+import styles from "./About.css";
 
 class About extends Component {
-  static fetchData = async (dispatch) => {
-    return dispatch(getData())
-  }
-  componentDidMount () {
-    console.log('About componentDidMount')
+  static fetchData = async dispatch => {
+    return dispatch(getData());
+  };
+  componentDidMount() {
+    console.log("About componentDidMount");
     if (_isEmpty(this.props.exampleData)) {
-      this.props.getData()      
+      this.props.getData();
     }
   }
-  render () {
-    const exampleData = this.props.exampleData
-    const exampleDataStr = JSON.stringify(exampleData, null, 2)
+  render() {
+    const exampleData = this.props.exampleData;
+    const exampleDataStr = JSON.stringify(exampleData, null, 2);
 
     return (
       <main>
-        <Header title='About' />
+        <Header title="About" />
         <article className={styles.article}>
           <p>this is a page with api call:</p>
           <p>[GET] https://reqres.in/api/unknown</p>
         </article>
-        <pre>
-          {exampleDataStr}
-        </pre>
+        <pre>{exampleDataStr}</pre>
       </main>
-    )
+    );
   }
 }
 
@@ -45,6 +43,6 @@ const mapProps = [
   {
     getData
   }
-]
+];
 
-export default connect(...mapProps)(About)
+export default connect(...mapProps)(About);

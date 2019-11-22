@@ -5,17 +5,28 @@ import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { StaticRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { isTablet } from "react-device-detect";
+
+import { setRuntimeVariable } from "~/store/actions/runtime";
 
 import matchRoute from "./matchRoute";
 
 import App from "~/App";
 import routes from "~/routes";
 import configureStore from "~/store/configureStore";
+
 import tmpl from "./tmpl";
 
 import Html from "../../src/components/Html";
 
 export default async (req, res, next) => {
+  const userAgent = req.get("User-Agent");
+
+  let isMobile =
+    /iPhone|Android|PlayBook|Kindle Fire|PalmSource|Palm|IEMobile|BB10/i.test(
+      userAgent
+    ) && !isTablet;
+
   const { component, params } = matchRoute(req.path);
   if (!component) {
     return next();
@@ -27,6 +38,7 @@ export default async (req, res, next) => {
   if (component.fetchData) {
     await component.fetchData(store.dispatch, params, req.query);
   }
+  store.dispatch(setRuntimeVariable({ name: "isMobile", value: isMobile }));
   const preloadedState = store.getState();
 
   const markup = ReactDOMServer.renderToString(
