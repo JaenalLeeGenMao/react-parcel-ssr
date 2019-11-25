@@ -1,7 +1,7 @@
 // src/components/App.js
 import React, { Component } from "react";
 import { withRouter } from "react-router";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import routes from "./routes";
@@ -12,18 +12,23 @@ import "~/styles/main.css";
 
 class App extends Component {
   componentDidMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
-      /** tracker view pages implement disini */
-      console.log("on route change", location);
-    });
-    window.addEventListener("resize", this.updateWindowDimensions);
+    this.initApp();
     console.log("App componentDidMount", this.props);
   }
 
   componentWillUnmount() {
-    this.unlisten();
     window.removeEventListener("resize", this.updateWindowDimensions);
+    this.unlisten();
   }
+
+  initApp = () => {
+    window.addEventListener("resize", this.updateWindowDimensions);
+
+    this.unlisten = this.props.history.listen((location, action) => {
+      /** tracker view pages implement disini */
+      console.log("on route change", location);
+    });
+  };
 
   updateWindowDimensions = () => {
     const { isMobile } = this.props.runtime;
@@ -48,6 +53,7 @@ class App extends Component {
             component={route.component}
           />
         ))}
+        <Redirect to="/NotFound" />
       </Switch>
     );
   }
