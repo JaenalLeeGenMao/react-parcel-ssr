@@ -1,4 +1,3 @@
-const ENV = "production";
 const base = {
   develop: "https://new.stag.mola.tv",
   staging: "https://stag.mola.tv",
@@ -35,7 +34,7 @@ const asset = {
   production: "https://mola01.koicdn.com/assets-global"
 };
 
-export default {
+export default ENV => ({
   port: 8080,
   endpoints: {
     clientUrl: base[ENV],
@@ -44,7 +43,7 @@ export default {
     apiArticles: `${base[ENV]}/api/v2/articles`,
     auth: `${base[ENV]}/accounts/_`,
     domain: base[ENV],
-    uploader,
+    uploader: uploader[ENV],
     redeem: redeem[ENV],
     ads: ads[ENV],
     analytic: analytic[ENV],
@@ -54,4 +53,4 @@ export default {
       maxRedirects: 1
     }
   }
-};
+});

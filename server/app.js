@@ -4,7 +4,15 @@ import express from "express";
 import morgan from "morgan";
 import cookiesMiddleware from "universal-cookie-express";
 import ssrMiddleware from "./middlewares/ssr";
-import config from "../config";
+import initConfig from "../config";
+
+import dotenv from "dotenv";
+dotenv.config();
+
+const ENV = process.env.REACT_APP_ENV || process.env.NODE_ENV || "production";
+const { REACT_APP_ENV, NODE_ENV } = process.env;
+console.log("environment", REACT_APP_ENV, NODE_ENV);
+const config = initConfig(ENV);
 
 const app = express();
 const port = process.env.PORT || config.port;
@@ -20,6 +28,7 @@ if (process.env.NODE_ENV === "production") {
 app.get("*", (req, res, next) => {
   // console.log("req", req);
   // console.log("res", res);
+  console.log(config);
   console.log("* jalan kok ssr tenang aja :)");
   next();
 });
