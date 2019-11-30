@@ -1,71 +1,76 @@
 // src/components/App.js
-import React, { Component } from "react";
-import { withRouter } from "react-router";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import routes from "./routes";
+import routes from './routes';
 
-import { setRuntimeVariable } from "~/store/actions/runtime";
+import { setRuntimeVariable } from '~/store/actions/runtime';
 
-import "~/styles/main.css";
+import '~/styles/main.css';
+
+import GlobalStyle from './styles/globalStyle';
 
 class App extends Component {
-  componentDidMount() {
-    this.initApp();
-    console.log("App componentDidMount", this.props);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateWindowDimensions);
-    this.unlisten();
-  }
-
-  initApp = () => {
-    window.addEventListener("resize", this.updateWindowDimensions);
-
-    this.unlisten = this.props.history.listen((location, action) => {
-      /** tracker view pages implement disini */
-      console.log("on route change", location);
-    });
-  };
-
-  updateWindowDimensions = () => {
-    const { isMobile } = this.props.runtime;
-
-    if (!isMobile && window.innerWidth <= 875) {
-      this.props.setRuntimeVariable({ name: "isMobile", value: true });
+    componentDidMount() {
+        this.initApp();
+        console.log('App componentDidMount', this.props);
     }
 
-    if (isMobile && window.innerWidth > 875) {
-      this.props.setRuntimeVariable({ name: "isMobile", value: false });
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+        this.unlisten();
     }
-  };
 
-  render() {
-    return (
-      <Switch>
-        {routes.map(route => (
-          <Route
-            key={route.path}
-            path={route.path}
-            exact={route.exact}
-            component={route.component}
-          />
-        ))}
-        <Redirect to="/NotFound" />
-      </Switch>
-    );
-  }
+    initApp = () => {
+        window.addEventListener('resize', this.updateWindowDimensions);
+
+        this.unlisten = this.props.history.listen((location, action) => {
+            /** tracker view pages implement disini */
+            console.log('on route change', location);
+        });
+    };
+
+    updateWindowDimensions = () => {
+        const { isMobile } = this.props.runtime;
+
+        if (!isMobile && window.innerWidth <= 875) {
+            this.props.setRuntimeVariable({ name: 'isMobile', value: true });
+        }
+
+        if (isMobile && window.innerWidth > 875) {
+            this.props.setRuntimeVariable({ name: 'isMobile', value: false });
+        }
+    };
+
+    render() {
+        return (
+            <Fragment>
+                <GlobalStyle />
+                <Switch>
+                    {routes.map(route => (
+                        <Route
+                            key={route.path}
+                            path={route.path}
+                            exact={route.exact}
+                            component={route.component}
+                        />
+                    ))}
+                    <Redirect to="/NotFound" />
+                </Switch>
+            </Fragment>
+        );
+    }
 }
 
 const mapProps = [
-  state => ({
-    runtime: state.runtime
-  }),
-  {
-    setRuntimeVariable
-  }
+    state => ({
+        runtime: state.runtime
+    }),
+    {
+        setRuntimeVariable
+    }
 ];
 
 export default withRouter(connect(...mapProps)(App));

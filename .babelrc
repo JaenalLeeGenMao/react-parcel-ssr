@@ -5,6 +5,11 @@
     "react"
   ],
   "plugins": [
+    ["babel-plugin-styled-components", {
+      "fileName": true,
+      "displayName": true,
+      "ssr": false
+    }],
     ["babel-plugin-root-import", {
       "rootPathSuffix": "src"
     }],
@@ -20,6 +25,11 @@
         "react"
       ],
       "plugins": [
+        ["babel-plugin-styled-components", {
+          "fileName": true,
+          "displayName": true,
+          "ssr": true
+        }],
         ["babel-plugin-root-import", {
           "rootPathSuffix": "src"
         }],
