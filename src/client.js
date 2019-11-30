@@ -25,7 +25,14 @@ const app = (
 
 const element = document.getElementById('main-app');
 
-ReactDOM.render(app, element);
+if (
+  process.env.NODE_ENV === 'production' ||
+  process.env.REACT_APP_ENV === 'production'
+) {
+  ReactDOM.hydrate(app, element);
+} else {
+  ReactDOM.render(app, element);
+}
 
 if (module.hot) {
   module.hot.dispose(function() {

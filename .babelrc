@@ -1,42 +1,56 @@
 {
-  "presets": [
-    "env",
-    "stage-0",
-    "react"
-  ],
+  "presets": ["env", "stage-0", "react"],
   "plugins": [
-    ["babel-plugin-styled-components", {
-      "fileName": true,
-      "displayName": true,
-      "ssr": false
-    }],
-    ["babel-plugin-root-import", {
-      "rootPathSuffix": "src"
-    }],
+    [
+      "babel-plugin-styled-components",
+      {
+        "fileName": true,
+        "displayName": true,
+        "ssr": true
+      }
+    ],
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "src"
+      }
+    ],
     "transform-class-properties"
   ],
   "env": {
     "server": {
       "presets": [
-        ["env", {
-          "targets": { "node": "current" }
-        }],
+        [
+          "env",
+          {
+            "targets": { "node": "current" }
+          }
+        ],
         "stage-0",
         "react"
       ],
       "plugins": [
-        ["babel-plugin-styled-components", {
-          "fileName": true,
-          "displayName": true,
-          "ssr": true
-        }],
-        ["babel-plugin-root-import", {
-          "rootPathSuffix": "src"
-        }],
+        [
+          "babel-plugin-styled-components",
+          {
+            "fileName": true,
+            "displayName": true,
+            "ssr": true
+          }
+        ],
+        [
+          "babel-plugin-root-import",
+          {
+            "rootPathSuffix": "src"
+          }
+        ],
         "transform-class-properties",
-        ["css-modules-transform", {
-          "generateScopedName": "[name]_[local]_[hash:base64:5]"
-        }]
+        [
+          "css-modules-transform",
+          {
+            "generateScopedName": "[name]_[local]_[hash:base64:5]"
+          }
+        ]
       ]
     }
   }
