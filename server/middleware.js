@@ -14,6 +14,13 @@ export default (req, res) => {
   const router = <StaticRouter location={req.originalUrl} context={context}><App /></StaticRouter>;
   const markup = ReactDOM.renderToString(router);
 
+  // IMPORTANT: redux implementation comming soong
+  // const pathSplit = req.path.split('/')
+  // const firstPath = pathSplit.length > 1 ? pathSplit[1] : ''
+  // if(firstPath === 'articles') console.log('this is articles page')
+  // store.dispatch(runtime({}))
+  // req.path === home
+
   // If react-router is redirecting, do it on the server side
   if (context.url) {
     res.redirect(301, context.url);
