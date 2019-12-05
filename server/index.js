@@ -4,7 +4,7 @@ import compression from 'compression';
 import express from 'express';
 import path from 'path';
 import middleware from './middleware';
-import favicon from '../app/favicon.ico';
+import favicon from '../src/favicon.ico';
 
 const app = express();
 

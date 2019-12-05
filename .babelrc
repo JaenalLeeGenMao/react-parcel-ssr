@@ -1,7 +1,21 @@
 {
+  "presets": [
+    ["env", {
+      "targets": { "node": "current" }
+    }],
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src"
+    }],
+    "transform-class-properties"
+  ],
   "env": {
     "server": {
-      "plugins": ["react-imported-component/babel", "babel-plugin-dynamic-import-node"]
+      "plugins": [
+        "react-imported-component/babel", "babel-plugin-dynamic-import-node"]
     },
     "client": {
       "plugins": ["react-imported-component/babel"]

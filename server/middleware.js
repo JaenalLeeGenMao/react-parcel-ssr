@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-import App from '../app/App';
+import App from '../src/App';
 import generateHtml from './generateHtml';
 
 export default (req, res) => {
