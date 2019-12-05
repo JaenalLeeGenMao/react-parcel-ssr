@@ -21,7 +21,7 @@ Handy Extras
 
 * `npm run dev` - Run the development server with hot reload but no server-rendering
 * `npm run build` - Build for production, required before running
-* `npm start` - Start the production server
+* `npm serve` - Start the production server
 
 ## How does it work?
 
