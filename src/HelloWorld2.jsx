@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './codeSplitAssets/NyanCat.css';
 import Go from './codeSplitAssets/NyanCat';
 
-import Meta from "./components/Meta";
+import Meta from './components/Meta';
 
 export default class Nyan extends Component {
   componentDidMount() {
@@ -13,12 +13,10 @@ export default class Nyan extends Component {
   render() {
     return (
       <div>
-        <Meta
-          title="Code Split"
-        />
+        <Meta title="Code Split" />
         <h1 className="hello-world">Hello world 2!</h1>
         <p style={{ textAlign: 'center' }}>
-                This is a code-split component.
+          This is a code-split component.
           <br />
           <Link to="/">Click here</Link> to see an ordinary component.
         </p>
