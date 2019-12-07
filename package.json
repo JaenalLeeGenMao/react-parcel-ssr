@@ -13,6 +13,7 @@
   "repository": "reactivestack/parcel-react-ssr",
   "scripts": {
     "dev": "npm run generate-imported-component && parcel src/index.html",
+    "ssr": "npm run build && npm run serve",
     "build": "rimraf dist && npm run generate-imported-component && npm run build-client && npm run build-server",
     "build-client": "cross-env BABEL_ENV=client parcel build src/index.html -d dist/client --public-url /dist",
     "build-server": "cross-env BABEL_ENV=server parcel build server/index.js -d dist/server --public-url /dist --target=node8",
@@ -20,14 +21,22 @@
     "serve": "node dist/server"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.2",
     "compression": "^1.7.2",
     "express": "^4.16.2",
+    "node-cache": "^5.0.2",
     "react": "^16.12.0",
+    "react-device-detect": "^1.11.14",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-imported-component": "^6.2.1",
-    "react-router-dom": "^5.1.2"
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

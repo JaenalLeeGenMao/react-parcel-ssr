@@ -9,12 +9,22 @@ import { Helmet } from 'react-helmet';
 const templatePath = path.join(__dirname, '..', 'client', 'index.html');
 const HTML_TEMPLATE = fs.readFileSync(templatePath).toString();
 
-export default function generateHtml(markup) {
+export default function generateHtml(markup, preloadedState) {
   // Get the server-rendering values for the <head />
   const helmet = Helmet.renderStatic();
 
   const $template = cheerio.load(HTML_TEMPLATE);
-  $template('head').append(helmet.title.toString() + helmet.meta.toString() + helmet.link.toString());
+  $template('head').append(
+    helmet.title.toString() + helmet.meta.toString() + helmet.link.toString()
+  );
+  $template('body').append(`
+    <script>
+      window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+        /</g,
+        '\\u003c'
+      )}
+    </script>
+  `);
   $template('#app').html(markup);
 
   return $template.html();

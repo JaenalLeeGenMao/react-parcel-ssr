@@ -5,7 +5,7 @@ import Go from './codeSplitAssets/NyanCat';
 
 import Meta from './components/Meta';
 
-export default class Nyan extends Component {
+class Nyan extends Component {
   componentDidMount() {
     Go();
   }
@@ -38,3 +38,5 @@ export default class Nyan extends Component {
     );
   }
 }
+
+export default Nyan;
