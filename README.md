@@ -1,4 +1,4 @@
-# React Parcel SSR
+# React Parcel SSR [BUGGY during production mode]
 
 > React Server Side Rendering with Parcel and Babel.
 
