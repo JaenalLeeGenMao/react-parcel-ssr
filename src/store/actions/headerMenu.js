@@ -1,11 +1,11 @@
-import _get from "lodash/get";
-import types from "~/store/types";
-import Api from "~/api";
+import _get from 'lodash/get';
+import types from '~/store/types';
+import Api from '~/api';
 
-import { getCache, setCache, getKeys } from "../middleware";
+import { getCache, setCache, getKeys } from '~/lib/cache';
 
 export const getHeaderMenu = ({ isSSR = false }) => async dispatch => {
-  const key = "headerMenu";
+  const key = 'headerMenu';
 
   let data = getCache(key);
   if (!data) {

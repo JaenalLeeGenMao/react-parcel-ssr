@@ -1,2 +1,5 @@
-/** This could be tracker implementation */
+/**
+ * This is an example of **tracker** implementation
+ * @param {*} someData an object that will be digested
+ */
 export const Tracker = someData => {};
