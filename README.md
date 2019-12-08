@@ -113,8 +113,8 @@ The browser version is in the `dist/client` folder and the Node.js version is in
 1. [src/client.js](src/client.js) - Entry point for your browser version
 1. [src/App.jsx](src/App.jsx) - Your main application component shared between your browser and Node.js version
 1. [src/routes.jsx](src/routes.jsx) - Where you specify the list of routing point (NOTE: SEO must be import directly, imported components are for client side)
-1. [src/helloWorld](src/helloWorld) - Dead simple hello world with SEO consumed
-1. [src/helloWorld2](src/helloWorld2) - A fun code split example (WARNING: SEO is not possible with code splitting)
+1. [src/containers/helloWorld](src/containers/helloWorld) - Dead simple hello world with SEO consumed
+1. [src/containers/helloWorld2](src/containers/helloWorld2) - A fun code split example (WARNING: SEO is not possible with code splitting)
 1. [src/assets/style/global.scss](src/assets/style/global.scss) - Example of global SCSS
 1. [server/index.js](server/index.js) - Entry point for your Node.js version
 1. [server/middleware.js](server/middleware.js) - Middleware taking care of server-rendering
