@@ -1,8 +1,12 @@
 import NodeCache from 'node-cache';
 
-const cache = new NodeCache();
-
 const TIMEOUT = 300;
+
+/**
+ * IMPORTANT: this makes sure that the entire session only uses single instance of Node-Cache
+ */
+let cache;
+if (!cache) cache = new NodeCache();
 
 /**
  * Returns a **undefined** if not found or expired. If the value was found it returns an **object** with the key value pair.

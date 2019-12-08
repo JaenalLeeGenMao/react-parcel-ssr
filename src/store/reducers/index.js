@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 
 import runtime from './runtime';
-import home from './home';
+import example from './example';
 import headerMenu from './headerMenu';
 
 const reducers = {
   runtime,
-  home,
+  example,
   headerMenu
 };
 

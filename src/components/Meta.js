@@ -20,9 +20,7 @@ class Header extends Component {
       } = this.props,
       logoLandscapeBlue =
         'https://mola01.koicdn.com/assets-global/images/mola-blue.svg',
-      metaTitle = title
-        ? `LFCTV - ${title}`
-        : 'LFCTV - Broadcaster Resmi Liga Inggris 2019-2022';
+      metaTitle = title ? `Example - ${title}` : 'Example';
     return (
       <Helmet>
         <meta charSet="utf-8" />
@@ -37,13 +35,13 @@ class Header extends Component {
           content={
             keywords
               ? keywords
-              : `LFCTV, Liverpool, Liverpool TV, ${description}`
+              : `Example, More Example, Extra Example, ${description}`
           }
         />
         <meta
           name="description"
           data-react-helmet="true"
-          content={`LFCTV Online ${description}`}
+          content={`Example Online ${description}`}
         />
         <title data-react-helmet="true">{metaTitle}</title>
         <meta name="msapplication-TileImage" content={logoLandscapeBlue} />

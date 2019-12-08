@@ -10,13 +10,15 @@ import { Provider } from 'react-redux';
 import { isTablet } from 'react-device-detect';
 
 import { setRuntimeVariable } from '~/store/actions/runtime';
+import { getHeaderMenu } from '~/store/actions/headerMenu';
 
 import configureStore from '../src/store/configureStore';
 
 import App from '../src/App';
 import generateHtml from './generateHtml';
+import matchRoute from './matchRoute';
 
-export default (req, res) => {
+export default async (req, res, next) => {
   const userAgent = req.get('User-Agent');
 
   let isMobile =
@@ -24,11 +26,21 @@ export default (req, res) => {
       userAgent
     ) && !isTablet;
 
+  const { component, params } = matchRoute(req.path);
+  if (!component) {
+    return next();
+  }
+
   // Generate the server-rendered HTML using the appropriate router
   const context = {};
   const store = configureStore(context);
 
   store.dispatch(setRuntimeVariable({ name: 'isMobile', value: isMobile }));
+  await store.dispatch(getHeaderMenu({ isSSR: true }));
+
+  if (component.fetchData) {
+    await component.fetchData(store.dispatch, params, req.query);
+  }
 
   const router = (
     <Provider store={store}>

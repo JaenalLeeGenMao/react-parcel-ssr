@@ -14,10 +14,23 @@ const getHeaderMenu = ({ isSSR }) => {
   return get(url, {
     ...SETTING
   })
-    .then(resp => _get(resp, 'data.data', []))
+    .then(resp => {
+      const result = _get(resp, 'data.data', []);
+      return {
+        meta: {
+          status: result.length > 0 ? 'success' : 'empty'
+        },
+        data: result
+      };
+    })
     .catch(err => {
       console.log('ERROR [getHeaderMenu] --> \n', err);
-      return [];
+      return {
+        meta: {
+          status: 'error'
+        },
+        data: result
+      };
     });
 };
 

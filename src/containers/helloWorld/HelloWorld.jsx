@@ -15,7 +15,7 @@ class HelloWorld extends Component {
         <p style={{ textAlign: 'center' }}>
           This is an ordinary react component.
           <br />
-          <Link to="/codeSplit">Click here</Link> to see a code-split component.
+          <Link to="/example">Click here</Link> to see a code-split component.
         </p>
       </div>
     );
