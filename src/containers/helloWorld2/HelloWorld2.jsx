@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './codeSplitAssets/NyanCat.css';
 import Go from './codeSplitAssets/NyanCat';
 
-import Meta from './components/Meta';
+import Meta from '~/components/Meta';
 
 class Nyan extends Component {
   componentDidMount() {
