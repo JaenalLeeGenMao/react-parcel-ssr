@@ -12,8 +12,6 @@ import App from './App';
 
 import configureStore from '../src/store/configureStore';
 
-rehydrateMarks();
-
 const preloadedState = window.__PRELOADED_STATE__;
 
 delete window.__PRELOADED_STATE__;

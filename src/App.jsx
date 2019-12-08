@@ -78,12 +78,9 @@ class App extends Component {
 }
 
 const mapProps = [
-  state => {
-    console.log(state);
-    return {
-      runtime: state.runtime
-    };
-  },
+  state => ({
+    runtime: state.runtime
+  }),
   {
     setRuntimeVariable
   }

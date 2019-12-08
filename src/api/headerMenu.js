@@ -16,7 +16,7 @@ const getHeaderMenu = ({ isSSR }) => {
   })
     .then(resp => _get(resp, 'data.data', []))
     .catch(err => {
-      console.log('ERROR [getHeaderMenu] --> ', err);
+      console.log('ERROR [getHeaderMenu] --> \n', err);
       return [];
     });
 };
