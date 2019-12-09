@@ -62,7 +62,6 @@ Simple example of how to do server-rendering. You will not believe how easy it i
 ├── .eslintrc
 ├── .gitignore
 ├── README.md
-├── config.js
 ├── package.json
 └── yarn.lock
 ```

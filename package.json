@@ -16,8 +16,8 @@
     "dev": "npm run generate-imported-component && parcel src/index.html",
     "ssr": "npm run build && npm run serve",
     "build": "rimraf dist && npm run generate-imported-component && npm run build-client && npm run build-server",
-    "build-client": "cross-env BABEL_ENV=client parcel build src/index.html -d dist/client --public-url /dist",
-    "build-server": "cross-env BABEL_ENV=server parcel build server/index.js -d dist/server --public-url /dist --target=node8",
+    "build-client": "cross-env BABEL_ENV=client parcel build src/index.html --no-source-maps -d dist/client --public-url /dist",
+    "build-server": "cross-env BABEL_ENV=server parcel build server/index.js --no-source-maps -d dist/server --public-url /dist --target=node8",
     "generate-imported-component": "imported-components src src/imported.js",
     "serve": "node dist/server",
     "clear": "rm -rf .cache dist"

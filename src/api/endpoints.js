@@ -1,15 +1,11 @@
 /* eslint-disable import/prefer-default-export */
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import initConfig from '../../config';
-
-const ENV = process.env.NODE_ENV || 'production';
-
-const { endpoints } = initConfig(ENV);
+const { LFCTV_BASE_URL, LFCTV_CONFIG_API_URL, LFCTV_APP_ID } = process.env;
 
 /** Client side endpoints */
-export const HEADER_MENU_ENDPOINT = `${endpoints.domain}/api/v2/config/ui/menu`;
+export const HEADER_MENU_ENDPOINT = `${LFCTV_BASE_URL}/api/v2/config/ui/menu`;
 
 /** Server side endpoints */
-export const HEADER_MENU_ENDPOINT_SSR = `${endpoints.serverApi.CONFIG_API_URL}/ui/menu?app_id=${endpoints.serverApi.appId}`;
+export const HEADER_MENU_ENDPOINT_SSR = `${LFCTV_CONFIG_API_URL}/ui/menu?app_id=${LFCTV_APP_ID}`;
