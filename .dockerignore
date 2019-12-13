@@ -1,12 +1,13 @@
-/node_modules
 *.log
 /.cache
-/dist
 /.env
 /.eslintignore
 /.eslintrc
 /.gitlab
 /.gitlab-ci.yml
-/Dockerfile
 /LICENSE
 /README.md
+/.gitignore
+/.git
+/Dockerfile
+/.dockerignore

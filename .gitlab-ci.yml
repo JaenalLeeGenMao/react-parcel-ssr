@@ -1,20 +1,74 @@
 stages:
-  #   - test
-  #   - build
+  - build
   - push_docker
 
-.job_template: &push_docker
+variables:
+  DOCKER_HOST: "tcp://localhost:2375"
+
+.build: &build
+  image: node:8-alpine
+  stage: build
+  cache:
+    key: vendor
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - dist/
+      - node_modules/
+    expire_in: 10 mins
+  after_script:
+    - apk add --update --no-cache --virtual deps util-linux python build-base
+    - yarn install
+    - yarn build
+    - apk del deps
+
+.push_docker: &push_docker
   image: google/cloud-sdk
   services:
     - docker:18.09-dind
-  script:
-    - export DOCKER_HOST="tcp://localhost:2375"
-    - docker info
-    - ./.gitlab/auth_gcloud.sh
-    - ./.gitlab/push_docker.sh
+  after_script:
+    - export REPOSITORY_ADDRESS="${REPOSITORY_HOST}/${GCLOUD_PROJECT_ID}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
+    - export IMAGE_NAME="${REPOSITORY_ADDRESS}:${CI_PIPELINE_IID}"
+    - echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+    - gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+    - docker build --tag $IMAGE_NAME .
+    - mkdir /assets
+    - container_id=$(docker create ${IMAGE_NAME})
+    - docker cp $container_id:/app/dist/client/. /assets/.
+    - docker rm $container_id
+    - gsutil -m -h "Cache-Control:public,max-age=31556952" cp -r /assets/* ${GCS_PATH}/assets/
+    # - gsutil -m -h "Cache-Control:public,max-age=31556952" cp -U -r src/assets/assets-global/* ${GCS_PATH}/assets-global/
+    - rm -rf /assets
+    - gcloud auth configure-docker --quiet
+    - docker push $IMAGE_NAME
   except:
     changes:
       - "qa_release_notes.md"
+
+build_staging:
+  <<: *build
+  variables:
+    NODE_ENV: "staging"
+    REACT_APP_ENV: "staging"
+    CDN_PATH: "https://cdn.stag.supersoccer.tv/lfctv"
+  script:
+    - echo 'Building staging app'
+  only:
+    - develop@apps/video/clients/lfctv-web
+
+# build_production:
+#   <<: *build
+#   variables:
+#     NODE_ENV: "production"
+#     REACT_APP_ENV: "production"
+#     GCS_PATH: ""
+#     CDN_PATH: ""
+#   script:
+#     - echo 'Building production app'
+#   only:
+#     - master@apps/video/clients/lfctv-web
 
 push_docker_staging:
   stage: push_docker
@@ -22,21 +76,17 @@ push_docker_staging:
   variables:
     GCLOUD_SERVICE_KEY: $GCR_SSTV_KEY_STAG
     GCLOUD_PROJECT_ID: $GCR_SSTV_PROJECT_STAG
-    NODE_ENV: staging
-    REACT_APP_ENV: staging
-    GCS_PATH: gs://sstv-staging-cdn/lfctv
-    CDN_PATH: https://cdn.stag.supersoccer.tv/lfctv
+    GCS_PATH: gs://sstv-staging-cdn/mola
+  script:
+    - echo 'Pushing docker to staging'
   only:
     - develop@apps/video/clients/lfctv-web
+
 # push_docker_production:
 #   stage: push_docker
 #   <<: *push_docker
 #   variables:
 #     GCLOUD_SERVICE_KEY: $GCR_SSTV_KEY_PROD
 #     GCLOUD_PROJECT_ID: $GCR_SSTV_PROJECT_PROD
-#     NODE_ENV: production
-#     REACT_APP_ENV: production
-#     GCS_PATH: gs://koicdn-com/como01
-#     CDN_PATH: https://como01.koicdn.com
 #   only:
-#     - master@apps/video/clients/como-web
+#     - master@apps/video/clients/lfctv-web
