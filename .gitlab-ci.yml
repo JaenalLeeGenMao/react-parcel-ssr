@@ -1,0 +1,42 @@
+stages:
+  #   - test
+  #   - build
+  - push_docker
+
+.job_template: &push_docker
+  image: google/cloud-sdk
+  services:
+    - docker:18.09-dind
+  script:
+    - export DOCKER_HOST="tcp://localhost:2375"
+    - docker info
+    - ./.gitlab/auth_gcloud.sh
+    - ./.gitlab/push_docker.sh
+  except:
+    changes:
+      - "qa_release_notes.md"
+
+push_docker_staging:
+  stage: push_docker
+  <<: *push_docker
+  variables:
+    GCLOUD_SERVICE_KEY: $GCR_SSTV_KEY_STAG
+    GCLOUD_PROJECT_ID: $GCR_SSTV_PROJECT_STAG
+    NODE_ENV: staging
+    REACT_APP_ENV: staging
+    GCS_PATH: gs://sstv-staging-cdn/lfctv
+    CDN_PATH: https://cdn.stag.supersoccer.tv/lfctv
+  only:
+    - develop@apps/video/clients/lfctv-web
+# push_docker_production:
+#   stage: push_docker
+#   <<: *push_docker
+#   variables:
+#     GCLOUD_SERVICE_KEY: $GCR_SSTV_KEY_PROD
+#     GCLOUD_PROJECT_ID: $GCR_SSTV_PROJECT_PROD
+#     NODE_ENV: production
+#     REACT_APP_ENV: production
+#     GCS_PATH: gs://koicdn-com/como01
+#     CDN_PATH: https://como01.koicdn.com
+#   only:
+#     - master@apps/video/clients/como-web
