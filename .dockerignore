@@ -1,0 +1,13 @@
+*.log
+/.cache
+/.env
+/.eslintignore
+/.eslintrc
+/.gitlab
+/.gitlab-ci.yml
+/LICENSE
+/README.md
+/.gitignore
+/.git
+/Dockerfile
+/.dockerignore

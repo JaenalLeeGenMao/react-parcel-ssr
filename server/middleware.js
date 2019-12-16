@@ -1,25 +1,25 @@
-// Middleware for the server-rendering
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import { printDrainHydrateMarks } from 'react-imported-component';
-import React from 'react';
-import ReactDOM from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { isTablet } from 'react-device-detect';
+// Middleware for the server-rendering
+import { printDrainHydrateMarks } from "react-imported-component";
+import React from "react";
+import ReactDOM from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { isTablet } from "react-device-detect";
 
-import { setRuntimeVariable } from '~/store/actions/runtime';
-import { getHeaderMenu } from '~/store/actions/headerMenu';
+import { setRuntimeVariable } from "~/store/actions/runtime";
+import { getHeaderMenu } from "~/store/actions/headerMenu";
 
-import configureStore from '../src/store/configureStore';
+import configureStore from "../src/store/configureStore";
 
-import App from '../src/App';
-import generateHtml from './generateHtml';
-import matchRoute from './matchRoute';
+import App from "../src/App";
+import generateHtml from "./generateHtml";
+import matchRoute from "./matchRoute";
 
 export default async (req, res, next) => {
-  const userAgent = req.get('User-Agent');
+  const userAgent = req.get("User-Agent");
 
   let isMobile =
     /iPhone|Android|PlayBook|Kindle Fire|PalmSource|Palm|IEMobile|BB10/i.test(
@@ -35,7 +35,7 @@ export default async (req, res, next) => {
   const context = {};
   const store = configureStore(context);
 
-  store.dispatch(setRuntimeVariable({ name: 'isMobile', value: isMobile }));
+  store.dispatch(setRuntimeVariable({ name: "isMobile", value: isMobile }));
   await store.dispatch(getHeaderMenu({ isSSR: true }));
 
   if (component.fetchData) {
