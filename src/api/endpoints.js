@@ -1,6 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import dotenv from "dotenv";
-dotenv.config();
 
 const { LFCTV_BASE_URL, LFCTV_CONFIG_API_URL, LFCTV_APP_ID } = process.env;
 

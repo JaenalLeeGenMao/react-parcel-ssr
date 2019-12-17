@@ -20,7 +20,9 @@ variables:
   after_script:
     - apk add --update --no-cache --virtual deps util-linux python build-base
     - yarn install
-    - yarn build
+    - ./node_modules/.bin/imported-components src src/imported.js
+    - ./node_modules/.bin/cross-env BABEL_ENV=client ./node_modules/.bin/parcel build src/index.html --no-source-maps -d dist/client --public-url $CDN_PATH/assets
+    - ./node_modules/.bin/cross-env BABEL_ENV=server ./node_modules/.bin/parcel build server/index.js --no-source-maps -d dist/server --public-url $CDN_PATH/assets --target=node8
     - apk del deps
 
 .push_docker: &push_docker
@@ -76,12 +78,11 @@ push_docker_staging:
   variables:
     GCLOUD_SERVICE_KEY: $GCR_SSTV_KEY_STAG
     GCLOUD_PROJECT_ID: $GCR_SSTV_PROJECT_STAG
-    GCS_PATH: gs://sstv-staging-cdn/mola
+    GCS_PATH: gs://sstv-staging-cdn/lfctv
   script:
     - echo 'Pushing docker to staging'
   only:
     - develop@apps/video/clients/lfctv-web
-
 # push_docker_production:
 #   stage: push_docker
 #   <<: *push_docker

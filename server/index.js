@@ -1,7 +1,4 @@
 // Setup express to handle Web requests
-import dotenv from "dotenv";
-dotenv.config();
-
 import compression from "compression";
 import express from "express";
 import path from "path";

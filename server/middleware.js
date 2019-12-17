@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 // Middleware for the server-rendering
 import { printDrainHydrateMarks } from "react-imported-component";
 import React from "react";
