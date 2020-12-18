@@ -13,3 +13,5 @@ export const HEADER_MENU_ENDPOINT = `${endpoints.domain}/api/v2/config/ui/menu`;
 
 /** Server side endpoints */
 export const HEADER_MENU_ENDPOINT_SSR = `${endpoints.serverApi.CONFIG_API_URL}/ui/menu?app_id=${endpoints.serverApi.appId}`;
+
+export const SWAPI_BASE_URL = `https://swapi.dev`

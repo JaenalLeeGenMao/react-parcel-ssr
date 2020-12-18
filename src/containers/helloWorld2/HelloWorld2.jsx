@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { get } from 'axios'
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -6,36 +7,23 @@ import Go from './codeSplitAssets/NyanCat';
 import './codeSplitAssets/NyanCat.css';
 
 class Nyan extends Component {
-  componentDidMount() {
-    Go();
+  state = {
+    data: null
+  }
+  async componentDidMount() {
+    // Go();
+    const { url } = this.props.location.state
+    if (url) {
+      this.setState({
+        data: await get(url) || null
+      })
+    }
   }
 
   render() {
     return (
       <div>
-        <Helmet>
-          <title>Hello World 2!</title>
-        </Helmet>
-        <h1 className="hello-world">Hello world 2!</h1>
-        <p style={{ textAlign: 'center' }}>
-          This is a code-split component.
-          <br />
-          <Link to="/">Click here</Link> to see an ordinary component.
-        </p>
-        <div className="wrapper">
-          <div className="rainbow">
-            <span />
-          </div>
-          <div className="nyan-cat">
-            <div className="feet" />
-            <div className="tail">
-              <span />
-            </div>
-            <div className="body" />
-            <div className="head" />
-          </div>
-          <div className="stars" />
-        </div>
+        {JSON.stringify(this.state.data)}
       </div>
     );
   }

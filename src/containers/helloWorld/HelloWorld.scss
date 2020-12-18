@@ -1,0 +1,22 @@
+* {
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.card-wrapper {
+  padding: 10px;
+}
+
+.btn-primary {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  background-color: #487898;
+  padding: 10px;
+}

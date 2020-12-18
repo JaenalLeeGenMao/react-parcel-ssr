@@ -5,41 +5,83 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import qs from 'querystring';
+import Api from '../../api'
+import './HelloWorld.scss'
 
 import { getExampleData } from '~/store/actions/example';
 
-import Meta from '~/components/Meta';
+// import Meta from '~/components/Meta';
 
 class HelloWorld extends Component {
-  static fetchData = async (dispatch, param, query) => {
-    return await dispatch(getExampleData({ isSSR: true }));
-  };
+  state = {
+    data: null
+  }
+  // static fetchData = async (dispatch, param, query) => {
+  //   return await dispatch(getExampleData({ isSSR: true }));
+  // };
 
   componentDidMount() {
-    const { meta, data } = this.props.example;
-    if (meta.status === 'loading') {
-      this.props.getExampleData({});
-    }
+    this.updateData()
   }
 
   componentDidUpdate(prevProps, prevState) {
     const prevParams = qs.parse(prevProps.location.search.replace(/\?/g, ''));
     const params = qs.parse(this.props.location.search.replace(/\?/g, ''));
+    console.log(params)
+    if (prevParams.v !== params.v) {
+      this.updateData()
+    }
+  }
 
-    if (prevParams.v !== params.v) this.props.getExampleData({});
+  updateData = async () => {
+    if (this.props.location) {
+      const params = qs.parse(this.props.location.search.replace(/\?/g, ''));
+      let result
+      try {
+        if (!params.v) {
+          console.log(await Api.getAllPeoples())
+          result = await Api.getAllPeoples()
+        } else {
+          if (params.v == 'films') result = await Api.getAllStarships()
+          if (params.v == 'planets') result = await Api.getAllPlanets()
+        }
+        console.log(await Api.getAllPeoples())
+        // console.log('wakakak', result)
+        if (result) this.setState({ data: result })
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
   render() {
-    const { meta, data } = this.props.example;
+    // const { meta, data } = this.props.example;
+
+    const { data } = this.state
+    // console.log(this.state)
     return (
-      <div>
-        <Meta {...data} />
-        <h1 className="hello-world">Hello world!</h1>
-        <p style={{ textAlign: 'center' }}>
-          This is an ordinary react component.
-          <br />
-          <Link to="/example">Click here</Link> to see a code-split component.
-        </p>
+      <div class="container">
+        {data &&
+          data.length > 0 &&
+          data.map((each, index) => (
+            <section class="card-wrapper">
+              {/* {JSON.stringify(each)} */}
+              <h4>{each.name}</h4>
+              <hr />
+              <div>Eye color {each.eye_color}</div>
+              <div>Birth year {each.birth_year}</div>
+              {/* <Link class='btn-primary' to={`/people/${index}`}>see more</Link> */}
+              <Link
+              class='btn-primary'
+              to={{
+                pathname: '/people',
+                state: {
+                  url: each.url
+                }
+              }}>see more</Link>
+            </section>
+          )
+        )}
       </div>
     );
   }
